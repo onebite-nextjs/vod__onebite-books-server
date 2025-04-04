@@ -44,11 +44,14 @@ export class BookService {
   }
 
   async findRandomBooks() {
-    const query = `
-    SELECT id, title, "subTitle", description, author, publisher, "coverImgUrl" 
-    FROM "Book" ORDER BY RANDOM() LIMIT 3
-    `;
-    return await this.prisma.$queryRawUnsafe(query);
+    const totalBooks = await this.prisma.book.count();
+    const skip = Math.floor(Math.random() * (totalBooks - 3));
+    
+    return await this.prisma.book.findMany({
+      take: 3,
+      skip: Math.max(0, skip),
+      select: prismaExclude('Book', ['searchIndex']),
+    });
   }
 
   async findOneBook(id: number) {
