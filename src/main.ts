@@ -7,7 +7,7 @@ import { AppModule } from "./app.module";
 import { ClassValidatorException } from "./util/class-validator-exeption";
 import { PrismaClientExceptionFilter } from "./util/prisma-client-exception.filter";
 
-const PORT = "12345";
+const PORT = "8080";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
